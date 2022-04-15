@@ -9,7 +9,8 @@ let informacionSchema = new mongoose.Schema({
     email : {type: String, required : true},
     celphone : {type: String, required : true},
     username : {type: String, required : true},
-    password : {type: String, required : true}
+    password : {type: String, required : true},
+    enfermedades : {type: Array, required : true}
 });
 
 module.exports = mongoose.model("prueba2", informacionSchema)

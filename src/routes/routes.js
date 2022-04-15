@@ -18,18 +18,21 @@ router.get("/signup", (req,res) => {
 
 router.post("/validate", acciones.register)
 
-router.post("/register", acciones.registerPrueba)
-
 router.post("/check", acciones.login)
 
 router.get("/profile", (req,res) => {
     if (req.session.isLogged == true){
-    // Simpre que queramos usar los datos dentro de un archivo es mejor guardar el json de los datso en una constante
-    res.send("Enviado")
+        if (req.session.enfermedadesRegistradas == "false"){
+            res.redirect("/enfermedades");
+        }else{
+            res.send("Enviado")
+        }
     } else {
         res.redirect("/login");
     }
 });
+
+router.get("/enfermedades", acciones.enfermedades)
 
 router.get("/error", (req, res) => {res.send("error")})
 

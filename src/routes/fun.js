@@ -11,26 +11,6 @@ acciones.login = (req,res) => {
     });
 }
 
-acciones.registerPrueba = async function(req,res) {
-    const {email, password} = req.body;
-    let registrarUsuario = new usuario({
-        _id : email,
-        email : email,
-        password: password
-    });
-
-    await registrarUsuario.save((err, document) => {
-        if (err) {
-            res.redirect("/error");
-        }else{
-            console.log(document);
-            req.session.email = email;
-            req.session.isLogged = true;
-            res.redirect("/profile");
-        }
-        });
-}
-
 acciones.register = async function(req,res) {
     console.log(req.body);
     const names = req.body.names.toString();
@@ -51,17 +31,19 @@ acciones.register = async function(req,res) {
         email : email,
         celphone : celphone,
         username : username,
-        password: password
+        password: password, 
+        enfermedades : []
     });
 
     let registerInicio = new Usuario({
         _id : email,
         username : username,
         email : email,
-        password : password
+        password : password,
+        enfermedadesRegistradas : "false"
+    });
 
-    })
-
+    //TODO Hacer una alerta si no te accepta el correo
     await registerInicio.save((err, document) => {
         if (err) {
             {res.redirect("/signup", {
@@ -79,7 +61,8 @@ acciones.register = async function(req,res) {
             req.session.username = username;
             req.session.email = email;
             req.session.isLogged = true;
-            res.redirect("/profile");
+            req.session.enfermedadesRegistradas = "false";
+            res.redirect("/enfermedades");
         }
         });
 }
@@ -88,19 +71,29 @@ acciones.login = async function(req, res){
     const email = req.body.email.toString();
     const password = req.body.password.toString();
     const result = await Usuario.findOne({_id : email, password : password})
-    console.log(result)
+    // TODO. Borrar el console.log(), cuando se entrega el proyecto
+    console.log(result);
     if (result != null){
         req.session.isLogged = true;
         req.session.username = result.username;
         req.session.email = email;
+        req.session.enfermedadesRegistradas = result.enfermedadesRegistradas;
+        console.log(result.enfermedadesRegistradas)
         res.redirect("/profile");
     }else{
-        res.redirect("/error")
+        res.redirect("/error");
     }
 }
 
 acciones.enfermedades = async function(req,res) {
-    
+    if(req.session.isLogged == true){
+        if (req.session.enfermedadesRegistradas == "false"){
+            res.render("enfermedades");
+        }else{
+            res.redirect("/profile")
+        }
+    }else{
+        res.redirect("/login")}
 }
 
 module.exports = acciones;
