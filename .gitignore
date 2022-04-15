@@ -1,0 +1,3 @@
+# Hacemos que no se incluya los modulos de Node
+node_modules/
+

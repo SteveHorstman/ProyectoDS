@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial</title>
+ 
+
+
+
+</head>
+<style>
+  *, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  background: #f9fff2;
+  font-family: 'Titillium Web', sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: #A2C57C;
+  transition: .5s ease;
+}
+a:hover {
+  color: #A2C57C;
+}
+
+input[type="checkbox"] {
+ margin-left: 25px; 
+ margin-top: 20px;
+ transform: scale(1.2);
+}
+
+.form {
+  background:  #ffffff;
+  padding: 40px 35px;
+  max-width: 450px;
+  margin: 10px auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.tab-group {
+  list-style: none;
+  border-radius:6px;
+  padding: 0;
+  margin: 0 0 40px 0;
+}
+.tab-group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.tab-group li a {
+  display: block;
+  text-decoration: none;
+  border-radius:4px;
+  padding: 15px;
+  background: rgba(160, 179, 176, 0.25);
+  color: #1e2423;
+  font-size: 20px;
+  float: left;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  transition: .5s ease;
+}
+.tab-group li a:hover {
+  background: #A2C57C;
+  color: #000000;
+}
+.tab-group .active a {
+  background: #A2C57C;
+  color: #000000;
+}
+
+.tab-content > div:last-child {
+  display: none;
+}
+
+::placeholder {
+  position: absolute;
+  left: 13px;
+  color: #555454;
+  transition: all 0.25s ease;
+  /* -webkit-backface-visibility: hidden; */
+  pointer-events: none;
+  font-size: 16px;
+}
+
+
+
+h1 {  
+  font-size: 36px;
+  text-align: center;
+  color: #000000;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+
+h2 {
+    text-align: left;
+    color: #000000;
+    font-weight: 100;
+    margin: 0 10px 20px;
+}
+
+label {
+  position: relative;
+  transform: translateY(-10px);
+  top: 1.5px;
+  left: 10px;
+  color: #000000;
+  transition: all 0.25s ease;
+  /* -webkit-backface-visibility: hidden; */
+  pointer-events: none;
+  font-size: 18px;
+}
+label .req {
+  margin: 2px;
+  color: #a2c57c3a;
+}
+
+label.active {
+  transform: translateY(50px);
+  left: 2px;
+  font-size: 14px;
+}
+label.active .req {
+  opacity: 0;
+}
+
+label.highlight {
+  color: #000000;
+}
+
+
+.field-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.top-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.top-row > div {
+  float: left;
+  width: 48%;
+  margin-right: 4%;
+}
+.top-row > div:last-child {
+  margin: 0;
+}
+
+.button {
+  border: 15px;
+  outline: none;
+  border-radius: 0;
+  padding: 150px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  letter-spacing: .1em;
+  background: #A2C57C;
+  color: #000000;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+}
+.button:hover, .button:focus {
+  background: #A2C57C;
+}
+
+.button-block {
+    padding: 18px 20px;
+    letter-spacing: 1px;
+    text-decoration: none;
+    border-radius: 5px;
+    color: #ffffff;
+    outline: none;
+    border: 1px solid #ffffff;
+    transition: .3s;
+    -webkit-transition: .3s;
+  display: block;
+  width: 100%;
+}
+
+</style>
+
+<script>
+
+function validacion() {
+        valor = document.getElementById("user").value;
+        valor1 = document.getElementById("pass").value;
+        if (valor == null || valor.length == 0 || /^\s+$/.test(valor)) {
+          alert("Escriba su nombre de usuario");
+          return false;
+        } else if (valor1 == null || valor1.length == 0 || /^\s+$/.test(valor1)) {
+          alert("Escriba la contraseña");
+          return false;
+        }
+        location.href = "";
+      }
+
+</script>
+
+<body>
+    <div class="form">
+          <div id="servicio">   
+          <img style="display: block; margin: auto; padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); cursor: zoom-in;" src="/img/dentelle logotipo.jpg" width="80" height="80">
+           <h1>Historial Clínico</h1>
+             <br><h2>Enfermedades:</h2>
+             <form action="/action_page.php">
+              <input type="checkbox" id="enfermedad1" name="enfermedad1" value="Hipertensión Arterial">
+              <label for="enfermedad1"> Hipertensión Arterial</label><br>
+              <input type="checkbox" id="enfermedad2" name="enfermedad2" value="Diabetes">
+              <label for="enfermedad2"> Diabetes</label><br>
+              <input type="checkbox" id="enfermedad3" name="enfermedad3" value="Hepatitis">
+              <label for="enfermedad3">Hepatitis</label><br>
+              <input type="checkbox" id="enfermedad4" name="enfermedad4" value="Problemas Respiratorios">
+              <label for="enfermedad4">Problemas Respiratorios</label><br>
+              <input type="checkbox" id="enfermedad5" name="enfermedad5" value="Cirugias">
+              <label for="enfermedad5"> Cirugias </label><br>
+              <input type="checkbox" id="enfermedad6" name="enfermedad6" value="Fiebre Reumántica">
+              <label for="enfermedad6">Fiebre Reumántica</label><br>
+              <input type="checkbox" id="enfermedad7" name="enfermedad7" value="Accidentes / Traumas">
+              <label for="enfermedad7">Accidentes / Traumas</label><br>
+              <input type="checkbox" id="enfermedad8" name="enfermedad8" value="Problemas Sistema Nervioso">
+              <label for="enfermedad8">Problemas Sistema Nervioso</label><br>
+              <input type="checkbox" id="enfermedad9" name="enfermedad9" value="Alergias">
+              <label for="enfermedad9">Alergias</label><br>
+              <input type="checkbox" id="enfermedad10" name="enfermedad10" value="VIH">
+              <label for="enfermedad10">VIH</label><br>
+              <input type="checkbox" id="enfermedad11" name="enfermedad11" value="Embarazo">
+              <label for="enfermedad11">Embarazo</label><br>
+              <input type="checkbox" id="enfermedad12" name="enfermedad12" value="Mareos / Náuseas">
+              <label for="enfermedad12">Mareos / Náuseas</label><br>
+              <input type="checkbox" id="enfermedad13" name="enfermedad13" value="Sistemas Cardiovasculares">
+              <label for="enfermedad13"> Sistemas Cardiovasculares</label><br>
+              <input type="checkbox" id="enfermedad14" name="enfermedad14" value="ETS">
+              <label for="enfermedad14">ETS</label><br>
+              <input type="checkbox" id="enfermedad15" name="enfermedad15" value="Tratamiento Medico Actual">
+              <label for="enfermedad15">Tratamiento Medico Actual</label><br>
+              <input type="checkbox" id="enfermedad16" name="enfermedad16" value="Asma">
+              <label for="enfermedad16">Asma</label><br>
+              <input type="checkbox" id="enfermedad17" name="enfermedad17" value="Ataques Epilepticos">
+              <label for="enfermedad17">Ataques Epilepticos</label><br>
+
+              <br><br>
+              <input type="submit" class="button button-block" value="Guardar Historial">
+            </form>
+            
+        
+  </div> <!-- /form -->
+  
+</body>
+
+</html>
