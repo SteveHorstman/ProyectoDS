@@ -90,10 +90,29 @@ acciones.enfermedades = async function(req,res) {
         if (req.session.enfermedadesRegistradas == false){
             res.render("enfermedades");
         }else{
-            res.redirect("/profile")
+            res.redirect("/profile");
         }
     }else{
         res.redirect("/login")}
+}
+
+acciones.regsitrarEnfermedades = async function(req,res) {
+    const enfermedades = ["hipertension", "diabetes", "hepatitis", "probelmasRespiratorios", "cirigias", "fiebreReumantica", "accidentes/traumas", "sistemaNervioso", "alergias", "vih", "embarazo", "mareos/nuaseas", "cardiovasculares", "ets", "tratamientoMedico", "asma", "epilepsia"];
+    const enfermedadesPadecidas = [];
+    for (i = 0; i < enfermedades.length - 1; i++){
+        if (req.body[enfermedades[i]] != undefined){
+            enfermedadesPadecidas.push(enfermedades[i])
+        }
+    }
+
+    await Info.findByIdAndUpdate({_id : req.session.email}, {enfermedades : enfermedadesPadecidas});
+    
+    await Usuario.findByIdAndUpdate({_id : req.session.email},{enfermedadesRegistradas : true});
+    
+    // TODO. Borrar el console.log()
+    console.log(enfermedadesPadecidas);
+
+    res.rendirect("/profile");
 }
 
 module.exports = acciones;
