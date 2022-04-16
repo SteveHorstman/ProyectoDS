@@ -40,7 +40,7 @@ acciones.register = async function(req,res) {
         username : username,
         email : email,
         password : password,
-        enfermedadesRegistradas : "false"
+        enfermedadesRegistradas : false
     });
 
     //TODO Hacer una alerta si no te accepta el correo
@@ -61,7 +61,7 @@ acciones.register = async function(req,res) {
             req.session.username = username;
             req.session.email = email;
             req.session.isLogged = true;
-            req.session.enfermedadesRegistradas = "false";
+            req.session.enfermedadesRegistradas = false;
             res.redirect("/enfermedades");
         }
         });
@@ -87,7 +87,7 @@ acciones.login = async function(req, res){
 
 acciones.enfermedades = async function(req,res) {
     if(req.session.isLogged == true){
-        if (req.session.enfermedadesRegistradas == "false"){
+        if (req.session.enfermedadesRegistradas == false){
             res.render("enfermedades");
         }else{
             res.redirect("/profile")

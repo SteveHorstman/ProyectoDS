@@ -22,7 +22,7 @@ router.post("/check", acciones.login)
 
 router.get("/profile", (req,res) => {
     if (req.session.isLogged == true){
-        if (req.session.enfermedadesRegistradas == "false"){
+        if (req.session.enfermedadesRegistradas == false){
             res.redirect("/enfermedades");
         }else{
             res.send("Enviado")
