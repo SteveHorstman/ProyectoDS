@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Usuario = require("./mongo/user");
 const Info = require("./mongo/info");
+const Status = require("./mongo/statuscovid");
 
 const acciones = {};
 
@@ -113,6 +114,103 @@ acciones.regsitrarEnfermedades = async function(req,res) {
     console.log(enfermedadesPadecidas);
 
     res.rendirect("/profile");
+}
+
+acciones.status = async function(req,res) {
+    if (req.session.isLogged == true){
+        let date = new Date();
+        const resultado = await Status.findOne({_id : req.session.email})
+        const fecha = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
+        if (resultado != null){
+            if (resultado.fecha !== fecha || (date.getHours()*360 + date.getMinutes()*60 + date.getSeconds()) - resultado.hora > 10800){  
+            res.render("statuscovid");
+        }else{
+            res.redirect("/state");
+        }
+        }else{
+            res.render("statuscovid");
+        }
+    }else{
+        res.redirect("/login");
+    }
+}
+
+acciones.entrada = async function(req,res) {
+    const preguntas = ["pregunta1", "pregunta2", "pregunta3", "pregunta4", "pregunta5"];
+    let numero = 0;
+    let date = new Date();
+    const dia = date.getDate();
+    const mes = date.getMonth() + 1;
+    const año = date.getFullYear();
+    if (req.session.isLogged == true){
+        console.log("Prueba")
+        const resultado = await Status.findOne({_id : req.session.email.toString()});
+        //! console.log(resultado);
+        console.log(req.session.email);
+        console.log(resultado);
+        if (resultado == null){
+            console.log("1")
+            if (req.body[preguntas[0]] != undefined && req.body[preguntas[1]] != undefined && req.body[preguntas[2]] != undefined && req.body[preguntas[3]] != undefined && req.body[preguntas[4]] != undefined){
+                for(i= 0; i< preguntas.length; i++){
+                    if(req.body[preguntas[i]] == "Si"){
+                        numero += 1;
+                    }
+                 }
+                let salud;
+                if (numero >= 4){
+                    salud = "Peligro de infección"
+                }else if (numero <  4 && numero >= 2){
+                    salud = "Posible covid"
+                }else if (numero == 1){
+                    salud = "Baja probabilidad de que este infectado"
+                }else{ 
+                    salud = "No infectado"
+                }
+
+                let statusregistro = new Status({
+                    _id : req.session.email,
+                    fecha : `${dia}/${mes}/${año}`,
+                    hora : date.getHours()*360 + date.getMinutes()*60 + date.getSeconds(), 
+                    infectado : salud
+                })
+
+                await statusregistro.save((err, document) => {if (err) {throw err}});
+                res.redirect("/state");
+            }else{
+                console.log("\n Error no se seleciono todas \n")
+                res.redirect("/statuscovid");
+            }
+        }else{
+            console.log("Ya hay una")
+            if (req.body[preguntas[0]] != undefined && req.body[preguntas[1]] != undefined && req.body[preguntas[2]] != undefined && req.body[preguntas[3]] != undefined && req.body[preguntas[4]] != undefined){
+                for(i= 0; i< preguntas.length; i++){
+                    if(req.body[preguntas[i]] == "Si"){
+                        numero += 1;
+                    }
+                 }
+                let salud;
+                if (numero >= 4){
+                    salud = "Peligro de infección"
+                }else if (numero <  4 && numero >= 2){
+                    salud = "Posible covid"
+                }else if (numero == 1){
+                    salud = "Baja probabilidad de que este infectado"
+                }else{ 
+                    salud = "No infectado"
+                }
+
+                await Status.findOneAndUpdate({_id: req.session.email}, {fecha : `${dia}/${mes}/${año}`, hora : date.getHours()*360 + date.getMinutes()*60 + date.getSeconds(), infectado : salud})
+
+                res.redirect("/state");
+
+            }else{
+                console.log("\n Error no se seleciono todas \n")
+                res.redirect("/statuscovid");
+            }
+        }
+    }else{
+        res.redirect("/login")
+    }
 }
 
 module.exports = acciones;

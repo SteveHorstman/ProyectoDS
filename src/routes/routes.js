@@ -37,6 +37,12 @@ router.get("/enfermedades", acciones.enfermedades);
 
 router.post("/registrarenfermedades", acciones.regsitrarEnfermedades);
 
+router.get("/statuscovid", acciones.status)
+
+router.post("/revision", acciones.entrada)
 router.get("/error", (req, res) => {res.send("error")})
 
+router.get("/state", (req, res) => {
+    res.send("Ya esta el formulario");
+})
 module.exports = router;
